@@ -7,7 +7,7 @@ import re
 try:
  sys.argv[1]
 except IndexError:
-    print 'No Inkbunny URL detected! Please use this command with [URL] in quotes: \n\n  python testxml.py "[URL]" \n\nRefer to Inkbunny\'s API under the search parameter for proper URL usage.'
+    print 'No Inkbunny URL detected! Please use this command with [URL] in quotes: \n\n  python IBxml2rss.py "[URL]" \n\nRefer to Inkbunny\'s API under the search parameter for proper URL usage.'
 #test if url exists as arguement. If not, print help.
 
 xmllink = sys.argv[1] + '&submissions_per_page=10&output_mode=xml'
@@ -110,6 +110,6 @@ while i < numitems:
     itemguid.text = vitemlink[i]
     i += 1
 tree = ET.ElementTree(rss)
-tree.write('filename.xml', encoding='UTF-8')
+tree.write('IBsearch.rss', encoding='UTF-8')
 
 print vrsstitle + ' made!'
