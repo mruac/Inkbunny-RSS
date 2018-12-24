@@ -126,25 +126,19 @@ while i < numitems:
     elif root[7][i].find('thumbnail_url_huge') != None:
         vitemthumb.append(root[7][i].find('thumbnail_url_huge').text)
 # if no thumbnail found, use default thumbnail
-    elif any(re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in item for item in ['png', 'jpeg', 'jpg', 'gif', 'swf', 'flv', 'mp4', 'mp3', 'doc', 'rtf', 'txt']) == True:
-        if re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ('png', 'jpg', 'jpeg', 'gif') == True:
-            vitemthumb.append(
-                'https://au.ib.metapix.net/images78/overlays/nofile.png')
-        elif re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ('doc', 'rtf', 'txt') == True:
-            vitemthumb.append(
-                'https://au.ib.metapix.net/images78/overlays/writing.png')
-        elif re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ('flv', 'mp4') == True:
-            vitemthumb.append(
-                'https://au.ib.metapix.net/images78/overlays/video.png')
-        elif re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ('swf') == True:
-            vitemthumb.append(
-                'https://au.ib.metapix.net/images78/overlays/shockwave.png')
-        elif re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ('mp3') == True:
-            vitemthumb.append(
-                'https://au.ib.metapix.net/images78/overlays/audio.png')
-        else:
-            vitemthumb.append(
-                'https://au.ib.metapix.net/images78/overlays/nofile.png')
+    elif re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ['png', 'jpeg', 'jpg', 'gif', 'swf', 'flv', 'mp4', 'mp3', 'doc', 'rtf', 'txt']:
+        if re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ['png', 'jpg', 'jpeg', 'gif']:
+            vitemthumb.append('https://au.ib.metapix.net/images78/overlays/nofile.png')
+        elif re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ['doc', 'rtf', 'txt']:
+            vitemthumb.append('https://au.ib.metapix.net/images78/overlays/writing.png')
+        elif re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ['flv', 'mp4']:
+            vitemthumb.append('https://au.ib.metapix.net/images78/overlays/video.png')
+        elif re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ['swf']:
+            vitemthumb.append('https://au.ib.metapix.net/images78/overlays/shockwave.png')
+        elif re.search(r'...$|(jpeg)$', root[7][i].findtext('file_name')).group() in ['mp3']:
+            vitemthumb.append('https://au.ib.metapix.net/images78/overlays/audio.png')
+    else:
+        vitemthumb.append('https://au.ib.metapix.net/images78/overlays/nofile.png')
     i += 1
 
 i = 0
