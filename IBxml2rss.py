@@ -23,8 +23,8 @@ xmlsource = urllib.urlopen(xmllink)
 tree = ET.parse(xmlsource)
 root = tree.getroot()
 
-if root[0].tag == 'error_code':
-    sys.exit('Error: Inkbunny returned error! Visit the offending URL for more information. \n\n' + xmllink)
+if root[1].tag == 'error_message':
+    sys.exit('Error: ' + root[1].text)
 # check if requested URL returns error
 
 sid = re.search(r'(?!sid=)(?<=sid=).*?((?=&)|($))', xmllink).group()
