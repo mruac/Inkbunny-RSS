@@ -70,10 +70,14 @@ IDs can be retrieved from the URL by accessing the main site and copying the IDs
 
   </div>
   <script>
+    home = window.location.href + "search?"
+    document.getElementbyId("iburl").innerHTML = home
+    document.getElementbyId("iburl").setAttribute("href",home)
+    
     function urlupdate() {
       var flags = document.getElementById("flags").value;
       //var url = "https://inkbunny.net/api_search.php?sid=" + sid + "&" + flags
-      var url = window.location.href + "search?" + flags
+      var url = home + flags
       document.getElementById("iburl").setAttribute("href",url);
       document.getElementById("iburl").innerHTML = url;
     }
