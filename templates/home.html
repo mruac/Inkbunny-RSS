@@ -70,10 +70,10 @@ IDs can be retrieved from the URL by accessing the main site and copying the IDs
 
   </div>
   <script>
-    function init() {
     var home = window.location.href + "search?";
-    document.getElementbyId("iburl").innerHTML = home;
-    document.getElementbyId("iburl").setAttribute("href",home);
+    function init() {
+    document.getElementById("iburl").innerHTML = home;
+    document.getElementById("iburl").setAttribute("href",home);
     }
     
     function urlupdate() {
