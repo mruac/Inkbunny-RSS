@@ -33,7 +33,7 @@ a { color: inherit; }
 </style>
 </head>
 
-<body>
+<body onload="init()">
   <div id="body">
     <h1>Inkbunny API 2 RSS</h1>
     <p>Converts Inkbunny Search API to a valid RSS feed</p>
@@ -70,9 +70,11 @@ IDs can be retrieved from the URL by accessing the main site and copying the IDs
 
   </div>
   <script>
+    function init() {
     home = window.location.href + "search?"
     document.getElementbyId("iburl").innerHTML = home
     document.getElementbyId("iburl").setAttribute("href",home)
+    }
     
     function urlupdate() {
       var flags = document.getElementById("flags").value;
