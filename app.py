@@ -37,6 +37,7 @@ else:
 #cachename is key name for redis cache
 def ibrss(datadict,root,cachename):
 
+    rating = datadict.get('rating')
     items = list(root[7])
     vitemtitle = []
     vitemid = []
@@ -45,6 +46,7 @@ def ibrss(datadict,root,cachename):
     vitemtype = []
     vitemdesc = []
     vitemuser = []
+    vitemrating = []
     vitempubdate = []
     vrsstitle = 'Inkbunny - '
     filename = 'IB'
@@ -58,6 +60,8 @@ def ibrss(datadict,root,cachename):
         vitemuser.append(content.text)
     for content in root.iter('type_name'):
         vitemtype.append(content.text)
+    for content in root.iter('rating_id'):
+        vitemrating.append(content.text)
 
     # add link to vitemlink
     for i in vitemid:
@@ -214,6 +218,23 @@ def ibrss(datadict,root,cachename):
     rsslink = ET.SubElement(channel, 'link')
 
     for i in range(len(items)):
+        # skip submissions if posts don't fit the rating
+        if rating == '001':
+            if vitemrating[i] == '0': continue
+            elif vitemrating[i] == '1': continue
+        elif rating == '011':
+            if vitemrating[i] == '0': continue
+        elif rating == '110':
+            if vitemrating[i] == '2': continue
+        elif rating == '010':
+            if vitemrating[i] == '0': continue
+            elif vitemrating[i] == '2': continue
+        elif rating == '100':
+            if vitemrating[i] == '1': continue
+            elif vitemrating[i] == '2': continue
+        elif rating == '101':
+            if vitemrating[i] == '1': continue
+        # elif rating == '111'
         item = ET.Element('item')
         channel.append(item)
         itemtitle = ET.SubElement(item, 'title')
@@ -244,7 +265,7 @@ def searchquery():
     keylist = list(request.args.keys())
     # returns nested list. [('username', [u'ww'])] [0][1][0] = ww
     flaglist = list(request.args.lists())
-    flags = ['sid', 'output_mode', 'field_join_type', 'text', 'string_join_type', 'keywords', 'title', 'description', 'md5', 'keyword_id',
+    flags = ['rating', 'sid', 'output_mode', 'field_join_type', 'text', 'string_join_type', 'keywords', 'title', 'description', 'md5', 'keyword_id',
              'username', 'user_id', 'favs_user_id', 'unread_submissions', 'type', 'sales', 'pool_id', 'orderby', 'dayslimit', 'random', 'scraps']
     for i in keylist:
         if i not in flags:
@@ -252,7 +273,12 @@ def searchquery():
 
     for flag in flaglist:
         if 'sid' in flag:
-            return 'User defined SIDs are restricted for this app.<br>Please define the SID in <code>config.ini</code>'
+            return 'User defined SIDs are restricted for this app.<br>Please define the SID in <code>config.ini</code> or in the <code>SID</code> environment variable'
+
+    if request.args.get('rating') == '000':
+        return 'Oi m8 wth are ya tryna do? Break ma code?'
+    elif request.args.get('rating') not in ['001','011','010','110','101','100','111',None]:
+        invalid += 'rating'
 
     if invalid == '': #no errors in url query
         # rebuild url query from flags
@@ -261,13 +287,14 @@ def searchquery():
             flaglist = [flaglist]
         for flag in flaglist:
             for value in flag[1]:
-                data[flag[0]] = value
                 cachename = cachename + flag[0] + ':' + value + ','
+                data[flag[0]] = value
         cachename = str(cachename.strip(',')) # make unique name for redis
         data.update({'sid': sid, 'output_mode': 'xml'})
 
+        datadict = data.copy() #clone dictionarys - datadict for ibrss() and data for API request
+        if 'rating' in data: del data['rating'] #remove custom flag 'rating' before using in API request
         url = 'https://inkbunny.net/api_search.php'
-        datadict = data
         data = urllib.parse.urlencode(data).encode('utf-8')
         root = ET.parse(urllib.request.urlopen(url=url, data=data)).getroot()
 
@@ -275,16 +302,21 @@ def searchquery():
             return 'Error: ' + root[1].text
         elif len(list(root[7])) == 0:
             return 'No submissions found. Try again when your search has at least one submission.'
+
         try:
             if ET.fromstring(g.db.get(cachename))[0][2][3].text == root[7][0].find('submission_id').text:
                 source = ''
-                return Response(g.db.get(cachename), mimetype='application/rss+xml') # already exists, return feed from cache
+                return Response(g.db.get(cachename), mimetype='application/rss+xml')  #already exists, return feed from cache
             else:
-                return ibrss(datadict,root,cachename) #latest post doesn't match, update feed
-        except TypeError: #doesnt exist in cache
+                return ibrss(datadict,root,cachename) # latest post doesn't match, update feed
+        except TypeError: doesnt exist in cache
             return ibrss(datadict,root,cachename)
+        except IndexError:
+            g.db.delete(cachename)
+            return ibrss(datadict,root,cachename)
+
     else:
-        return 'Invalid flag: ' + invalid.strip(', ') + '<br>Please check the URL and try again.'
+        return 'Invalid flag(s): ' + invalid.strip(', ') + '<br>Please check the URL and try again.'
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
