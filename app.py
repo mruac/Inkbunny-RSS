@@ -309,9 +309,9 @@ def searchquery():
                 return Response(g.db.get(cachename), mimetype='application/rss+xml')  #already exists, return feed from cache
             else:
                 return ibrss(datadict,root,cachename) # latest post doesn't match, update feed
-        except TypeError: doesnt exist in cache
+        except TypeError: #doesnt exist in cache
             return ibrss(datadict,root,cachename)
-        except IndexError:
+        except IndexError: #unknown error in the flags (bypassed the error checker) last resort.
             g.db.delete(cachename)
             return ibrss(datadict,root,cachename)
 
