@@ -63,8 +63,8 @@ def ibrss(datadict,root,cachename):
         vitemtype.append(content.text)
     for content in root.iter('rating_id'):
         vitemrating.append(content.text)
-	for content in root.iter('file_url_full'):
-		vitemimg.append(content.text)
+    for content in root.iter('file_url_full'):
+        vitemimg.append(content.text)
 
     # add link to vitemlink
     for i in vitemid:
