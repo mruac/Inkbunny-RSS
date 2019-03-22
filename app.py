@@ -48,6 +48,7 @@ def ibrss(datadict,root,cachename):
     vitemuser = []
     vitemrating = []
     vitempubdate = []
+	vitemimg = []
     vrsstitle = 'Inkbunny - '
     filename = 'IB'
 
@@ -62,6 +63,8 @@ def ibrss(datadict,root,cachename):
         vitemtype.append(content.text)
     for content in root.iter('rating_id'):
         vitemrating.append(content.text)
+	for content in root.iter('file_url_full'):
+		vitemimg.append(content.text)
 
     # add link to vitemlink
     for i in vitemid:
@@ -148,7 +151,7 @@ def ibrss(datadict,root,cachename):
 
     # add description to vitemdesc
     for i in range(len(items)):
-        vitemdesc.append('<a href="' + vitemlink[i] + '"><img src="' + vitemthumb[i] + '"></a><br/>Type: '
+        vitemdesc.append('<a href="' + vitemlink[i] + '"><img src="' + vitemthumb[i] + '"></a><p><a href="' + vitemlink[i] + '">Submission</a> | <a href="' + vitemimg[i] + '">Direct</a></p>Type: '
                          + vitemtype[i] + ' <br/><br/><a href="http://inkbunny.net/' + vitemuser[i] + '">By ' + vitemuser[i] + '</a>')
 
     # create integer to day string for vitempubdate
