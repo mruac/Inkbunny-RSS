@@ -17,12 +17,12 @@ Start Redis cache server
 `redis-server`
 
 Start Flask web app
-`python3 app.py`
+`python3.10 app.py`
 
 ## Heroku
 
 Deploy directory to Heroku
 
-Add `Redis To Go` add-on for Redis cache
+Add [`Heroku Data for Redis®`](https://elements.heroku.com/addons/heroku-redis) add-on for Redis cache
 
 Add SID as environment variable and set to your SID.

@@ -39,13 +39,13 @@ a { color: inherit; }
     <p>Converts Inkbunny Search API to a valid RSS feed</p>
     <input autocomplete="off" id="flags" placeholder="Flags (Seperate flags with &)" type="text" onkeyup="urlupdate()">
     <p>
-      Refer to <a href="https://wiki.inkbunny.net/wiki/API#Search">Inkbunny Search API</a> under <b>Search Condition Parameters</b> for information on available flags.<br>
+      Refer to <a href="https://wiki.inkbunny.net/wiki/API#Search:~:text=no.%20Required%3A%20No-,Search%20Condition%20Parameters,-(Only%20used%20in">Inkbunny Search API</a> under <b>Search Condition Parameters</b> for information on available flags.<br>
           Please note that <code>keywords=yes</code> and <code>orderby=create_datetime</code> will be on by default unless specified otherwise!
     </p>
-    <p><b>New!</b> <code>rating</code> flag is added! Use 0 and 1 to toggle the filter on/off and the following order to specify your rating filters: [General][Mature][Adult]. See examples for, well, exmaples.</p>
+    <p><code>rating</code> flag: Use 0 and 1 to toggle the filter off/on and the following order to specify your rating filters: [General][Mature][Adult]. See examples for, well, exmaples.</p>
     <fieldset>
-    <legend id="exampleslegend" onclick="egtoggle()">Examples (click to show)</legend>
-    <div id="examples" style="display:none">
+    <legend>Examples</legend>
+    <div>
       <ul>
         <li><code>text=anthro&title=yes</code><br>
       Returns search results for Text search for "anthro" in Keywords and Title.</li>
@@ -87,18 +87,6 @@ IDs can be retrieved from the URL by accessing the main site and copying the IDs
       var url = home + flags
       document.getElementById("iburl").setAttribute("href",url);
       document.getElementById("iburl").innerHTML = url;
-    }
-
-    function egtoggle(){
-      var examplesdiv = document.getElementById("examples");
-      if (examplesdiv.getAttribute("style") === "display:none") {
-        document.getElementById("exampleslegend").innerHTML = "Examples (click to hide)";
-        examplesdiv.setAttribute("style", "");
-      } else {
-        document.getElementById("exampleslegend").innerHTML = "Examples (click to show)";
-        examplesdiv.setAttribute("style", "display:none");
-      }
-
     }
   </script>
   <a id="github" href="https://github.com/mruac/Inkbunny-RSS"><b>Issues? GitHub</b></a>
