@@ -1,0 +1,10 @@
+services:
+  inkbunny-rss:
+    build: . #build image from dir
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - SID=${SID}
+    ports:
+      - "${PORT:-80}:5000" #set host port to PORT, otherwise default to 80
+  redis:
+    image: "redis:alpine"
