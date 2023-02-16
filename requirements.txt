@@ -8,5 +8,5 @@ MarkupSafe==2.1.1
 packaging==21.3
 pyparsing==3.0.9
 redis==4.3.4
-Werkzeug==2.2.1
+Werkzeug==2.2.3
 wrapt==1.14.1
