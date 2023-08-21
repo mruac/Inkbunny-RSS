@@ -1,5 +1,7 @@
 # Inkbunny-RSS
 
+*_This project is now archived. Future updates to this project will be adapted as a bridge for [RSS-Bridge](https://github.com/RSS-Bridge/rss-bridge/)._*
+
 My first proper project, inspired by the RSS function in [boothale's FurAffinity API "FAExport"](https://github.com/boothale/faexport)
 
 Essentially it takes the output from Inkbunny's search API and converts it into a usable RSS file that can be used locally. Please refer to InkBunny's API [documentation](https://wiki.inkbunny.net/wiki/API#Search) for more information and possible flags.
