@@ -1,6 +1,6 @@
 # Inkbunny-RSS
 
-*_This project is now archived. Future updates to this project will be adapted as a bridge for [RSS-Bridge](https://github.com/RSS-Bridge/rss-bridge/)._*
+*_This project is now archived. Future updates to this project will be adapted as a bridge for [RSS-Bridge](https://github.com/mruac/mruac-rss-bridge/tree/bridge-inkbunnyUserBridge)._*
 
 My first proper project, inspired by the RSS function in [boothale's FurAffinity API "FAExport"](https://github.com/boothale/faexport)
 
